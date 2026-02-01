@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Live Wallpapers - 4K & HD Downloads</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #8B5CF6;
+            --deep-purple: #6D28D9;
+            --dark-purple: #4C1D95;
+            --light-purple: #C4B5FD;
+            --accent-pink: #EC4899;
+            --bg-dark: #0F0A1F;
+            --bg-darker: #0A0612;
+            --text-light: #E9D5FF;
+            --text-white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(109, 40, 217, 0.12) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgShift 20s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 5%;
+            border-bottom: 2px solid var(--deep-purple);
+            background: linear-gradient(135deg, rgba(15, 10, 31, 0.8), rgba(76, 29, 149, 0.2));
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6)); }
+            50% { filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--light-purple);
+            margin-top: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 3px;
+            color: var(--text-white);
+            text-shadow: 0 0 30px var(--primary-purple);
+        }
+
+        /* Wallpaper Grid */
+        .wallpaper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .wallpaper-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(76, 29, 149, 0.1));
+            border: 2px solid var(--deep-purple);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .wallpaper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            mix-blend-mode: overlay;
+        }
+
+        .wallpaper-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent-pink);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+        }
+
+        .wallpaper-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .wallpaper-thumbnail {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, var(--dark-purple), var(--deep-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallpaper-thumbnail::before {
+            content: 'LIVE';
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--light-purple);
+            letter-spacing: 4px;
+            opacity: 0.3;
+        }
+
+        .wallpaper-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            font-size: 3rem;
+            color: var(--text-white);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+
+        .wallpaper-card:hover .wallpaper-thumbnail::after {
+            opacity: 0.9;
+        }
+
+        .wallpaper-info {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wallpaper-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .wallpaper-resolution {
+            color: var(--light-purple);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 6, 18, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(15, 10, 31, 0.95), rgba(76, 29, 149, 0.2));
+            border: 2px solid var(--primary-purple);
+            border-radius: 24px;
+            max-width: 650px;
+            width: 100%;
+            padding: 1.2rem;
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--text-white);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary-purple);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 10;
+            background: rgba(15, 10, 31, 0.8);
+        }
+
+        .close-modal:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            transform: rotate(90deg);
+        }
+
+        .modal-video-preview {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--dark-purple), var(--deep-purple));
+            border-radius: 16px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .modal-video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .modal-video-preview .video-placeholder {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .modal-video-preview::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .modal-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            color: var(--text-white);
+            margin-bottom: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .modal-description {
+            display: none;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .download-section {
+            margin-bottom: 0.8rem;
+        }
+
+        .download-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-label {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            color: var(--light-purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .section-label span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .download-btn {
+            flex: 1;
+            min-width: 180px;
+            padding: 0.9rem 1.3rem;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .download-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .download-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-4k {
+            background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
+            color: var(--text-white);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .download-4k:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        .download-hd {
+            background: linear-gradient(135deg, var(--accent-pink), #DB2777);
+            color: var(--text-white);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .download-hd:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
+        }
+
+        .download-mobile {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: var(--text-white);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            width: 100%;
+        }
+
+        .download-mobile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+        }
+
+        .resolution-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid var(--primary-purple);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            color: var(--light-purple);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .wallpaper-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 2rem;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+            }
+
+            .download-btn {
+                min-width: 100%;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .wallpaper-card:nth-child(odd) {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .wallpaper-card:nth-child(even) {
+            animation: float 6s ease-in-out infinite 3s;
+        }
+
+        /* Copy Protection */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        img {
+            pointer-events: none;
+            -webkit-user-drag: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Norawg Wallpaper</div>
+        <div class="subtitle">Premium Live Wallpapers</div>
+    </header>
+
+    <main>
+        <h1 class="page-title">Live Wallpaper Collection</h1>
+
+        <div class="wallpaper-grid" id="wallpaperGrid">
+            <!-- Wallpaper cards will be generated here -->
+        </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal()">×</div>
+            <div class="modal-video-preview" id="modalPreview">
+                <video id="modalVideo" autoplay loop muted playsinline style="display: none;"></video>
+                <span class="video-placeholder" id="modalPlaceholder" style="font-family: 'Bebas Neue', cursive; font-size: 3rem; letter-spacing: 3px; color: var(--light-purple);">NO PREVIEW</span>
+            </div>
+            <h2 class="modal-title" id="modalTitle">Wallpaper Title</h2>
+            
+            <!-- PC & Laptop Downloads -->
+            <div class="download-section">
+                <div class="section-label">
+                    <span>💻</span>
+                    <span>PC & LAPTOP</span>
+                </div>
+                <div class="download-buttons">
+                    <button class="download-btn download-4k" onclick="download4K()">
+                        <span>⬇ Download 4K</span>
+                    </button>
+                    <button class="download-btn download-hd" onclick="downloadHD()">
+                        <span>⬇ Download HD</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Downloads -->
+            <div class="download-section">
+                <div class="section-label">
+                    <span>📱</span>
+                    <span>MOBILE</span>
+                </div>
+                <button class="download-btn download-mobile" onclick="downloadMobile()">
+                    <span>⬇ Download HD</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample wallpaper data
+        // ĐỂ THÊM WALLPAPER MỚI: Copy một object và thay đổi thông tin
+        // ĐỂ XÓA WALLPAPER: Xóa toàn bộ object tương ứng
+        const wallpapers = [
+            {
+    id: 1,
+    title: "Cosmic Drive Live Wallpaper",
+    resolution: "4K & HD Available",
+    videoUrl: "https://files.catbox.moe/yji34f.mp4",
+    download4K: "https://drive.google.com/file/d/1s0fOn1hbc_WRfxnJEYl8hzMi8Jos91Hg/view?usp=drivesdk",
+    downloadHD: "https://drive.google.com/file/d/1Qvxp46cJrL4fNHvHkhOn61B6KDMZ5TYM/view?usp=drivesdk",
+    downloadMobile: "https://drive.google.com/file/d/1l-KDPr-WHAXYslbYWvnMNugb2a1yoRlq/view?usp=drivesdk"
+}
+            
+                      
+            /* 
+            ĐỂ THÊM WALLPAPER MỚI, COPY ĐOẠN NÀY:
+            
+            ,
+            {
+                id: 10,
+                title: "Tên Wallpaper",
+                resolution: "4K & HD Available",
+                videoUrl: "link-video-preview.mp4",
+                download4K: "link-download-4k.mp4",          // PC/Laptop 4K
+                downloadHD: "link-download-hd.mp4",          // PC/Laptop HD
+                downloadMobile: "link-download-mobile.mp4"   // Mobile HD
+            }
+            
+            LƯU Ý VỀ VIDEO:
+            - Video phải từ nguồn hỗ trợ CORS (cross-origin)
+            - Hoặc upload lên cùng server với website
+            - Định dạng: .mp4, .webm
+            - Nếu video từ Google Drive/Dropbox: cần link direct download
+            */
+        ];
+
+        let currentWallpaper = null;
+
+        // Generate wallpaper cards
+        function generateWallpapers() {
+            const grid = document.getElementById('wallpaperGrid');
+            wallpapers.forEach(wallpaper => {
+                const card = document.createElement('div');
+                card.className = 'wallpaper-card';
+                card.onclick = () => openModal(wallpaper);
+                card.innerHTML = `
+                    <div class="wallpaper-thumbnail"></div>
+                    <div class="wallpaper-info">
+                        <div class="wallpaper-title">${wallpaper.title}</div>
+                        <div class="wallpaper-resolution">${wallpaper.resolution}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Open detail modal
+        function openModal(wallpaper) {
+            currentWallpaper = wallpaper;
+            const videoElement = document.getElementById('modalVideo');
+            const placeholderElement = document.getElementById('modalPlaceholder');
+            
+            // Nếu có link video, hiển thị video; nếu không thì hiển thị placeholder
+            if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+                videoElement.src = wallpaper.videoUrl;
+                videoElement.setAttribute('crossorigin', 'anonymous'); // Hỗ trợ CORS
+                videoElement.style.display = 'block';
+                placeholderElement.style.display = 'none';
+                
+                // Xử lý lỗi nếu video không load được
+                videoElement.onerror = function() {
+                    console.error('Video failed to load:', wallpaper.videoUrl);
+                    videoElement.style.display = 'none';
+                    placeholderElement.style.display = 'block';
+                    placeholderElement.textContent = 'VIDEO UNAVAILABLE';
+                };
+                
+                videoElement.play().catch(err => {
+                    console.error('Video play error:', err);
+                });
+            } else {
+                videoElement.style.display = 'none';
+                placeholderElement.style.display = 'block';
+                placeholderElement.textContent = 'NO PREVIEW';
+            }
+            
+            document.getElementById('modalTitle').textContent = wallpaper.title;
+            document.getElementById('detailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            const videoElement = document.getElementById('modalVideo');
+            videoElement.pause();
+            videoElement.src = '';
+            document.getElementById('detailModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Download 4K
+        function download4K() {
+            if (currentWallpaper && currentWallpaper.download4K) {
+                // Tải file thật
+                window.location.href = currentWallpaper.download4K;
+            } else {
+                alert(`Downloading ${currentWallpaper.title} in 4K (3840×2160)...\n\nPlease add download4K link to the wallpaper data.`);
+            }
+        }
+
+        // Download HD
+        function downloadHD() {
+            if (currentWallpaper && currentWallpaper.downloadHD) {
+                // Tải file thật
+                window.location.href = currentWallpaper.downloadHD;
+            } else {
+                alert(`Downloading ${currentWallpaper.title} in HD (1920×1080)...\n\nPlease add downloadHD link to the wallpaper data.`);
+            }
+        }
+
+        // Download Mobile
+        function downloadMobile() {
+            if (currentWallpaper && currentWallpaper.downloadMobile) {
+                // Tải file thật
+                window.location.href = currentWallpaper.downloadMobile;
+            } else {
+                alert(`Downloading ${currentWallpaper.title} for Mobile...\n\nPlease add downloadMobile link to the wallpaper data.`);
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        generateWallpapers();
+
+        // ===== COPY PROTECTION =====
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.keyCode == 123 || // F12
+                (e.ctrlKey && e.shiftKey && e.keyCode == 73) || // Ctrl+Shift+I
+                (e.ctrlKey && e.shiftKey && e.keyCode == 74) || // Ctrl+Shift+J
+                (e.ctrlKey && e.keyCode == 85)) { // Ctrl+U
+                e.preventDefault();
+                return false;
+            }
+
+            // Disable Ctrl+C, Ctrl+A
+            if (e.ctrlKey && (e.keyCode == 67 || e.keyCode == 65)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable text selection on drag
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable copying
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>
