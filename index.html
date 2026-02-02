@@ -520,16 +520,6 @@
             color: var(--text-light);
             opacity: 0.7;
         }
-
-        /* Music Toggle Button Animation */
-        #musicToggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
-        }
-
-        #musicToggle:active {
-            transform: scale(0.95);
-        }
     </style>
 </head>
 <body>
@@ -589,25 +579,203 @@
     </div>
 
     <!-- Music Player -->
-    <div id="musicPlayer" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-        <button id="musicToggle" style="
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-purple);
-            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-            transition: all 0.3s ease;
-        ">
-            🔊
-        </button>
+    <div id="musicPlayer" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 320px;
+        background: linear-gradient(135deg, rgba(15, 10, 31, 0.95), rgba(76, 29, 149, 0.3));
+        border: 2px solid var(--primary-purple);
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 20px 60px rgba(139, 92, 246, 0.5);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        transition: all 0.3s ease;
+    ">
+        <!-- Disc Rotating -->
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <div id="musicDisc" style="
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            ">
+                <div style="
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background: var(--bg-dark);
+                    border: 3px solid var(--text-white);
+                "></div>
+                <div style="
+                    position: absolute;
+                    width: 2px;
+                    height: 35px;
+                    background: var(--text-white);
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    opacity: 0.5;
+                "></div>
+            </div>
+            
+            <div style="flex: 1;">
+                <div id="songTitle" style="
+                    font-family: 'Bebas Neue', cursive;
+                    font-size: 1.2rem;
+                    color: var(--text-white);
+                    letter-spacing: 1px;
+                    margin-bottom: 0.3rem;
+                ">Background Music</div>
+                <div id="songArtist" style="
+                    font-size: 0.8rem;
+                    color: var(--light-purple);
+                ">MODAPK</div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div style="margin-bottom: 1rem;">
+            <input type="range" id="progressBar" min="0" max="100" value="0" style="
+                width: 100%;
+                height: 6px;
+                border-radius: 3px;
+                outline: none;
+                background: linear-gradient(to right, var(--primary-purple) 0%, var(--primary-purple) 0%, rgba(139, 92, 246, 0.2) 0%);
+                -webkit-appearance: none;
+                cursor: pointer;
+            ">
+            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                <span id="currentTime" style="font-size: 0.75rem; color: var(--light-purple);">0:00</span>
+                <span id="totalTime" style="font-size: 0.75rem; color: var(--light-purple);">0:00</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+            <button id="prevBtn" style="
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 2px solid var(--primary-purple);
+                background: rgba(139, 92, 246, 0.2);
+                color: var(--text-white);
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            ">⏮</button>
+            
+            <button id="playPauseBtn" style="
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: none;
+                background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+                color: var(--text-white);
+                font-size: 1.5rem;
+                cursor: pointer;
+                box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+                transition: all 0.3s ease;
+            ">▶</button>
+            
+            <button id="nextBtn" style="
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 2px solid var(--primary-purple);
+                background: rgba(139, 92, 246, 0.2);
+                color: var(--text-white);
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            ">⏭</button>
+            
+            <button id="volumeBtn" style="
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 2px solid var(--primary-purple);
+                background: rgba(139, 92, 246, 0.2);
+                color: var(--text-white);
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            ">🔊</button>
+        </div>
+
+        <!-- Volume Slider (Hidden by default) -->
+        <div id="volumeControl" style="display: none; margin-top: 1rem;">
+            <input type="range" id="volumeSlider" min="0" max="100" value="100" style="
+                width: 100%;
+                height: 6px;
+                border-radius: 3px;
+                outline: none;
+                background: linear-gradient(to right, var(--accent-pink) 100%, rgba(236, 72, 153, 0.2) 100%);
+                -webkit-appearance: none;
+                cursor: pointer;
+            ">
+        </div>
     </div>
-    <audio id="bgMusic" loop autoplay>
+
+    <audio id="bgMusic" loop>
         <source src="" type="audio/mpeg">
     </audio>
+
+    <style>
+        /* Custom Range Slider Styles */
+        #progressBar::-webkit-slider-thumb,
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--text-white);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+        }
+
+        #progressBar::-moz-range-thumb,
+        #volumeSlider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--text-white);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+        }
+
+        /* Disc Rotation Animation */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .spinning {
+            animation: spin 3s linear infinite;
+        }
+
+        /* Button Hover Effects */
+        #prevBtn:hover, #nextBtn:hover, #volumeBtn:hover {
+            background: rgba(139, 92, 246, 0.4);
+            transform: scale(1.1);
+        }
+
+        #playPauseBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        #playPauseBtn:active {
+            transform: scale(0.95);
+        }
+    </style>
 
     <script>
         // Sample game data
@@ -781,60 +949,147 @@
             }
         }
 
-        // Music Player
+        // Advanced Music Player
         const bgMusic = document.getElementById('bgMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        let isPlaying = true; // Bắt đầu với trạng thái đang phát
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const progressBar = document.getElementById('progressBar');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeControl = document.getElementById('volumeControl');
+        const currentTimeEl = document.getElementById('currentTime');
+        const totalTimeEl = document.getElementById('totalTime');
+        const musicDisc = document.getElementById('musicDisc');
+        
+        let isPlaying = false;
 
-        // Thay link nhạc của bạn ở đây
-        bgMusic.src = 'https://files.catbox.moe/fijaa5.mp3'; // ← Thêm link nhạc MP3 vào đây
+        // ═══════════════════════════════════════════════════
+        // THÊM LINK NHẠC CỦA BẠN Ở ĐÂY
+        // ═══════════════════════════════════════════════════
+        bgMusic.src = 'https://files.catbox.moe/fijaa5.mp3'; // ← Paste link nhạc MP3 vào đây
+        
+        // Format time (seconds to MM:SS)
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
 
-        // Toggle music
-        musicToggle.addEventListener('click', function() {
+        // Update progress bar
+        bgMusic.addEventListener('timeupdate', function() {
+            const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
+            progressBar.value = progress || 0;
+            
+            // Update progress bar gradient
+            progressBar.style.background = `linear-gradient(to right, var(--primary-purple) ${progress}%, rgba(139, 92, 246, 0.2) ${progress}%)`;
+            
+            // Update time display
+            currentTimeEl.textContent = formatTime(bgMusic.currentTime);
+            totalTimeEl.textContent = formatTime(bgMusic.duration);
+        });
+
+        // Seek functionality
+        progressBar.addEventListener('input', function() {
+            const seekTime = (progressBar.value / 100) * bgMusic.duration;
+            bgMusic.currentTime = seekTime;
+        });
+
+        // Play/Pause button
+        playPauseBtn.addEventListener('click', function() {
             if (isPlaying) {
                 bgMusic.pause();
-                musicToggle.textContent = '🔇';
+                playPauseBtn.textContent = '▶';
+                musicDisc.classList.remove('spinning');
                 isPlaying = false;
             } else {
-                bgMusic.play().catch(err => {
-                    console.log('Play error:', err);
-                });
-                musicToggle.textContent = '🔊';
+                bgMusic.play().catch(err => console.log('Play error:', err));
+                playPauseBtn.textContent = '⏸';
+                musicDisc.classList.add('spinning');
                 isPlaying = true;
             }
         });
 
-        // Auto-play music khi load trang
+        // Previous button (restart song)
+        prevBtn.addEventListener('click', function() {
+            bgMusic.currentTime = 0;
+        });
+
+        // Next button (skip to end, will loop)
+        nextBtn.addEventListener('click', function() {
+            bgMusic.currentTime = bgMusic.duration - 1;
+        });
+
+        // Volume button (toggle volume control)
+        volumeBtn.addEventListener('click', function() {
+            if (volumeControl.style.display === 'none') {
+                volumeControl.style.display = 'block';
+            } else {
+                volumeControl.style.display = 'none';
+            }
+        });
+
+        // Volume slider
+        volumeSlider.addEventListener('input', function() {
+            const volume = volumeSlider.value / 100;
+            bgMusic.volume = volume;
+            
+            // Update volume slider gradient
+            volumeSlider.style.background = `linear-gradient(to right, var(--accent-pink) ${volumeSlider.value}%, rgba(236, 72, 153, 0.2) ${volumeSlider.value}%)`;
+            
+            // Update volume icon
+            if (volume === 0) {
+                volumeBtn.textContent = '🔇';
+            } else if (volume < 0.5) {
+                volumeBtn.textContent = '🔉';
+            } else {
+                volumeBtn.textContent = '🔊';
+            }
+        });
+
+        // Auto-play on page load
         window.addEventListener('load', function() {
             if (bgMusic.src && bgMusic.src !== '') {
-                // Thử phát nhạc tự động
                 const playPromise = bgMusic.play();
                 
                 if (playPromise !== undefined) {
                     playPromise
                         .then(() => {
-                            // Phát thành công
-                            musicToggle.textContent = '🔊';
+                            playPauseBtn.textContent = '⏸';
+                            musicDisc.classList.add('spinning');
                             isPlaying = true;
                             console.log('Music auto-playing');
                         })
                         .catch(err => {
-                            // Bị chặn auto-play, cần user interaction
-                            console.log('Auto-play blocked, waiting for user click');
-                            musicToggle.textContent = '🔇';
+                            console.log('Auto-play blocked, click to play');
+                            playPauseBtn.textContent = '▶';
                             isPlaying = false;
                             
-                            // Thử phát khi user click bất kỳ đâu trên trang
-                            document.body.addEventListener('click', function playOnFirstClick() {
-                                bgMusic.play().then(() => {
-                                    musicToggle.textContent = '🔊';
-                                    isPlaying = true;
-                                    document.body.removeEventListener('click', playOnFirstClick);
-                                }).catch(e => console.log('Play failed:', e));
+                            // Auto-play on first user interaction
+                            document.body.addEventListener('click', function playOnClick() {
+                                if (!isPlaying) {
+                                    bgMusic.play().then(() => {
+                                        playPauseBtn.textContent = '⏸';
+                                        musicDisc.classList.add('spinning');
+                                        isPlaying = true;
+                                        document.body.removeEventListener('click', playOnClick);
+                                    }).catch(e => console.log('Play failed:', e));
+                                }
                             }, { once: true });
                         });
                 }
             }
+        });
+
+        // When music is playing
+        bgMusic.addEventListener('play', function() {
+            musicDisc.classList.add('spinning');
+        });
+
+        // When music is paused
+        bgMusic.addEventListener('pause', function() {
+            musicDisc.classList.remove('spinning');
         });
 
         // Close modal when clicking outside
