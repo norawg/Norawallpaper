@@ -158,6 +158,15 @@
             overflow: hidden;
         }
 
+        .wallpaper-thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         .wallpaper-thumbnail::before {
             content: 'LIVE';
             font-family: 'Bebas Neue', cursive;
@@ -165,6 +174,12 @@
             color: var(--light-purple);
             letter-spacing: 4px;
             opacity: 0.3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallpaper-thumbnail.has-video::before {
+            display: none;
         }
 
         .wallpaper-thumbnail::after {
@@ -493,7 +508,7 @@
 </head>
 <body>
     <header>
-        <div class="logo">ANIMEWALL</div>
+        <div class="logo">Norawg Wallpaper</div>
         <div class="subtitle">Premium Live Wallpapers</div>
     </header>
 
@@ -550,17 +565,14 @@
         // ĐỂ XÓA WALLPAPER: Xóa toàn bộ object tương ứng
         const wallpapers = [
             {
-                id: 1,
-                title: "Cherry Blossom Dreams",
-                resolution: "4K & HD Available",
-                videoUrl: "https://files.catbox.moe/yji34f.mp4", // Để trống hoặc thêm link video của bạn
-                download4K: "https://example.com/downloads/cherry-blossom-4k.mp4",
-                downloadHD: "https://example.com/downloads/cherry-blossom-hd.mp4",
-                downloadMobile: "https://example.com/downloads/cherry-blossom-mobile.mp4"
-            },
-            
-            
-            
+    id: 1,
+    title: "Cosmic Drive Live wallpaper",
+    videoUrl: "https://files.catbox.moe/yji34f.mp4", // ← CÓ LINK VIDEO
+    download4K: "https://drive.google.com/file/d/1s0fOn1hbc_WRfxnJEYl8hzMi8Jos91Hg/view?usp=drivesdk",
+    downloadHD: "https://drive.google.com/file/d/1Qvxp46cJrL4fNHvHkhOn61B6KDMZ5TYM/view?usp=drivesdk",
+    downloadMobile: "https://drive.google.com/file/d/1l-KDPr-WHAXYslbYWvnMNugb2a1yoRlq/view?usp=drivesdk"
+}
+   
             /* 
             ĐỂ THÊM WALLPAPER MỚI, COPY ĐOẠN NÀY:
             
@@ -592,13 +604,38 @@
                 const card = document.createElement('div');
                 card.className = 'wallpaper-card';
                 card.onclick = () => openModal(wallpaper);
+                
+                // Tạo HTML cho thumbnail
+                let thumbnailContent = '';
+                if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+                    thumbnailContent = `<video autoplay loop muted playsinline></video>`;
+                }
+                
                 card.innerHTML = `
-                    <div class="wallpaper-thumbnail"></div>
+                    <div class="wallpaper-thumbnail ${wallpaper.videoUrl ? 'has-video' : ''}">
+                        ${thumbnailContent}
+                    </div>
                     <div class="wallpaper-info">
                         <div class="wallpaper-title">${wallpaper.title}</div>
                         <div class="wallpaper-resolution">${wallpaper.resolution}</div>
                     </div>
                 `;
+                
+                // Nếu có video, load nó
+                if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+                    const videoEl = card.querySelector('video');
+                    if (videoEl) {
+                        videoEl.src = wallpaper.videoUrl;
+                        videoEl.load();
+                        
+                        // Xử lý lỗi nếu video không load được
+                        videoEl.onerror = function() {
+                            console.error('Thumbnail video failed:', wallpaper.videoUrl);
+                            card.querySelector('.wallpaper-thumbnail').classList.remove('has-video');
+                        };
+                    }
+                }
+                
                 grid.appendChild(card);
             });
         }
