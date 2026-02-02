@@ -493,7 +493,7 @@
 </head>
 <body>
     <header>
-        <div class="logo">Norawg Wallpaper</div>
+        <div class="logo">ANIMEWALL</div>
         <div class="subtitle">Premium Live Wallpapers</div>
     </header>
 
@@ -510,7 +510,7 @@
         <div class="modal-content">
             <div class="close-modal" onclick="closeModal()">×</div>
             <div class="modal-video-preview" id="modalPreview">
-                <video id="modalVideo" autoplay loop muted playsinline style="display: none;"></video>
+                <video id="modalVideo" loop muted playsinline preload="metadata" crossorigin="anonymous" style="display: none;"></video>
                 <span class="video-placeholder" id="modalPlaceholder" style="font-family: 'Bebas Neue', cursive; font-size: 3rem; letter-spacing: 3px; color: var(--light-purple);">NO PREVIEW</span>
             </div>
             <h2 class="modal-title" id="modalTitle">Wallpaper Title</h2>
@@ -550,16 +550,17 @@
         // ĐỂ XÓA WALLPAPER: Xóa toàn bộ object tương ứng
         const wallpapers = [
             {
-    id: 1,
-    title: "Cosmic Drive Live Wallpaper",
-    resolution: "4K & HD Available",
-    videoUrl: "https://files.catbox.moe/yji34f.mp4",
-    download4K: "https://drive.google.com/file/d/1s0fOn1hbc_WRfxnJEYl8hzMi8Jos91Hg/view?usp=drivesdk",
-    downloadHD: "https://drive.google.com/file/d/1Qvxp46cJrL4fNHvHkhOn61B6KDMZ5TYM/view?usp=drivesdk",
-    downloadMobile: "https://drive.google.com/file/d/1l-KDPr-WHAXYslbYWvnMNugb2a1yoRlq/view?usp=drivesdk"
-}
+                id: 1,
+                title: "Cherry Blossom Dreams",
+                resolution: "4K & HD Available",
+                videoUrl: "https://files.catbox.moe/yji34f.mp4", // Để trống hoặc thêm link video của bạn
+                download4K: "https://example.com/downloads/cherry-blossom-4k.mp4",
+                downloadHD: "https://example.com/downloads/cherry-blossom-hd.mp4",
+                downloadMobile: "https://example.com/downloads/cherry-blossom-mobile.mp4"
+            },
             
-                      
+            
+            
             /* 
             ĐỂ THÊM WALLPAPER MỚI, COPY ĐOẠN NÀY:
             
@@ -608,24 +609,52 @@
             const videoElement = document.getElementById('modalVideo');
             const placeholderElement = document.getElementById('modalPlaceholder');
             
+            // Reset video trước
+            videoElement.pause();
+            videoElement.src = '';
+            videoElement.load();
+            
             // Nếu có link video, hiển thị video; nếu không thì hiển thị placeholder
             if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+                // Thử load video
                 videoElement.src = wallpaper.videoUrl;
-                videoElement.setAttribute('crossorigin', 'anonymous'); // Hỗ trợ CORS
-                videoElement.style.display = 'block';
-                placeholderElement.style.display = 'none';
+                videoElement.style.display = 'none'; // Ẩn lúc đầu
+                placeholderElement.style.display = 'block';
+                placeholderElement.textContent = 'LOADING...';
+                
+                // Khi video sẵn sàng
+                videoElement.onloadeddata = function() {
+                    videoElement.style.display = 'block';
+                    placeholderElement.style.display = 'none';
+                    videoElement.play().catch(err => {
+                        console.log('Auto-play blocked, waiting for user interaction');
+                        // Nếu autoplay bị chặn, vẫn hiện video
+                    });
+                };
                 
                 // Xử lý lỗi nếu video không load được
-                videoElement.onerror = function() {
+                videoElement.onerror = function(e) {
                     console.error('Video failed to load:', wallpaper.videoUrl);
+                    console.error('Error details:', e);
                     videoElement.style.display = 'none';
                     placeholderElement.style.display = 'block';
                     placeholderElement.textContent = 'VIDEO UNAVAILABLE';
+                    
+                    // Gợi ý debug
+                    console.log('💡 Tip: Check if the video URL is a direct link');
+                    console.log('💡 For Catbox: Use https://files.catbox.moe/xxxxx.mp4');
                 };
                 
-                videoElement.play().catch(err => {
-                    console.error('Video play error:', err);
-                });
+                // Timeout nếu load quá lâu (15 giây)
+                setTimeout(function() {
+                    if (videoElement.style.display === 'none' && placeholderElement.textContent === 'LOADING...') {
+                        placeholderElement.textContent = 'LOAD TIMEOUT';
+                        console.error('Video load timeout after 15s');
+                    }
+                }, 15000);
+                
+                // Load video
+                videoElement.load();
             } else {
                 videoElement.style.display = 'none';
                 placeholderElement.style.display = 'block';
