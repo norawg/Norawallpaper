@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Live Wallpapers - 4K & HD Downloads</title>
+    <title>Mod APK Games - Free Download</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -105,15 +105,15 @@
             text-shadow: 0 0 30px var(--primary-purple);
         }
 
-        /* Wallpaper Grid */
-        .wallpaper-grid {
+        /* Game Grid */
+        .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
         }
 
-        .wallpaper-card {
+        .game-card {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(76, 29, 149, 0.1));
             border: 2px solid var(--deep-purple);
             border-radius: 16px;
@@ -123,7 +123,7 @@
             position: relative;
         }
 
-        .wallpaper-card::before {
+        .game-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -137,17 +137,17 @@
             mix-blend-mode: overlay;
         }
 
-        .wallpaper-card:hover {
+        .game-card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: var(--accent-pink);
             box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
         }
 
-        .wallpaper-card:hover::before {
+        .game-card:hover::before {
             opacity: 0.3;
         }
 
-        .wallpaper-thumbnail {
+        .game-thumbnail {
             width: 100%;
             height: 240px;
             background: linear-gradient(135deg, var(--dark-purple), var(--deep-purple));
@@ -158,7 +158,7 @@
             overflow: hidden;
         }
 
-        .wallpaper-thumbnail video {
+        .game-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -167,8 +167,8 @@
             left: 0;
         }
 
-        .wallpaper-thumbnail::before {
-            content: 'LIVE';
+        .game-thumbnail::before {
+            content: 'GAME';
             font-family: 'Bebas Neue', cursive;
             font-size: 3rem;
             color: var(--light-purple);
@@ -178,11 +178,11 @@
             z-index: 1;
         }
 
-        .wallpaper-thumbnail.has-video::before {
+        .game-thumbnail.has-image::before {
             display: none;
         }
 
-        .wallpaper-thumbnail::after {
+        .game-thumbnail::after {
             content: '▶';
             position: absolute;
             font-size: 3rem;
@@ -192,17 +192,17 @@
             z-index: 2;
         }
 
-        .wallpaper-card:hover .wallpaper-thumbnail::after {
+        .game-card:hover .game-thumbnail::after {
             opacity: 0.9;
         }
 
-        .wallpaper-info {
+        .game-info {
             padding: 1.5rem;
             position: relative;
             z-index: 2;
         }
 
-        .wallpaper-title {
+        .game-title {
             font-family: 'Bebas Neue', cursive;
             font-size: 1.8rem;
             color: var(--text-white);
@@ -210,11 +210,17 @@
             letter-spacing: 2px;
         }
 
-        .wallpaper-resolution {
+        .game-version {
             color: var(--light-purple);
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .game-size {
+            color: var(--accent-pink);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
         }
 
         /* Detail Modal */
@@ -285,7 +291,7 @@
             transform: rotate(90deg);
         }
 
-        .modal-video-preview {
+        .modal-image-preview {
             width: 100%;
             height: 200px;
             background: linear-gradient(135deg, var(--dark-purple), var(--deep-purple));
@@ -300,19 +306,13 @@
             box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
         }
 
-        .modal-video-preview video {
+        .modal-image-preview img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 16px;
         }
 
-        .modal-video-preview .video-placeholder {
-            position: absolute;
-            z-index: 1;
-        }
-
-        .modal-video-preview::before {
+        .modal-image-preview::before {
             content: '';
             position: absolute;
             width: 200%;
@@ -334,14 +334,25 @@
             letter-spacing: 2px;
         }
 
-        .modal-description {
-            display: none;
+        .game-details {
+            margin-bottom: 0.8rem;
         }
 
-        .download-buttons {
+        .detail-item {
             display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            color: var(--light-purple);
+        }
+
+        .detail-value {
+            color: var(--text-white);
+            font-weight: bold;
         }
 
         .download-section {
@@ -365,6 +376,12 @@
 
         .section-label span:first-child {
             font-size: 1.5rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .download-btn {
@@ -406,54 +423,21 @@
             z-index: 1;
         }
 
-        .download-4k {
+        .download-apk {
             background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
             color: var(--text-white);
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            width: 100%;
         }
 
-        .download-4k:hover {
+        .download-apk:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
         }
 
-        .download-hd {
-            background: linear-gradient(135deg, var(--accent-pink), #DB2777);
-            color: var(--text-white);
-            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
-        }
-
-        .download-hd:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
-        }
-
-        .download-mobile {
-            background: linear-gradient(135deg, #10B981, #059669);
-            color: var(--text-white);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
-            width: 100%;
-        }
-
-        .download-mobile:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
-        }
-
-        .resolution-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(139, 92, 246, 0.2);
-            border: 1px solid var(--primary-purple);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-            color: var(--light-purple);
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
-            .wallpaper-grid {
+            .game-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -484,11 +468,11 @@
             50% { transform: translateY(-20px); }
         }
 
-        .wallpaper-card:nth-child(odd) {
+        .game-card:nth-child(odd) {
             animation: float 6s ease-in-out infinite;
         }
 
-        .wallpaper-card:nth-child(even) {
+        .game-card:nth-child(even) {
             animation: float 6s ease-in-out infinite 3s;
         }
 
@@ -504,257 +488,330 @@
             pointer-events: none;
             -webkit-user-drag: none;
         }
+
+        /* Footer Copyright */
+        footer {
+            background: linear-gradient(135deg, rgba(15, 10, 31, 0.95), rgba(76, 29, 149, 0.3));
+            border-top: 2px solid var(--deep-purple);
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--light-purple);
+            letter-spacing: 1px;
+        }
+
+        .copyright a {
+            color: var(--primary-purple);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .copyright a:hover {
+            color: var(--accent-pink);
+        }
+
+        .made-with {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        /* Music Toggle Button Animation */
+        #musicToggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        #musicToggle:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">Norawg Wallpaper</div>
-        <div class="subtitle">Premium Live Wallpapers</div>
+        <div class="logo">MODAPK</div>
+        <div class="subtitle">Premium Modded Games</div>
     </header>
 
     <main>
-        <h1 class="page-title">Live Wallpaper Collection</h1>
+        <h1 class="page-title">Mod APK Collection</h1>
 
-        <div class="wallpaper-grid" id="wallpaperGrid">
-            <!-- Wallpaper cards will be generated here -->
+        <div class="game-grid" id="gameGrid">
+            <!-- Game cards will be generated here -->
         </div>
     </main>
+
+    <footer>
+        <div class="copyright">
+            © 2024 MODAPK. All rights reserved.
+        </div>
+        <div class="made-with">
+            Made with 💜 by Your Name
+        </div>
+    </footer>
 
     <!-- Detail Modal -->
     <div class="modal" id="detailModal">
         <div class="modal-content">
             <div class="close-modal" onclick="closeModal()">×</div>
-            <div class="modal-video-preview" id="modalPreview">
-                <video id="modalVideo" loop muted playsinline preload="metadata" crossorigin="anonymous" style="display: none;"></video>
-                <span class="video-placeholder" id="modalPlaceholder" style="font-family: 'Bebas Neue', cursive; font-size: 3rem; letter-spacing: 3px; color: var(--light-purple);">NO PREVIEW</span>
+            <div class="modal-image-preview" id="modalPreview">
+                <img id="modalImage" style="display: none;" alt="Game Preview">
             </div>
-            <h2 class="modal-title" id="modalTitle">Wallpaper Title</h2>
+            <h2 class="modal-title" id="modalTitle">Game Title</h2>
             
-            <!-- PC & Laptop Downloads -->
-            <div class="download-section">
-                <div class="section-label">
-                    <span>💻</span>
-                    <span>PC & LAPTOP</span>
+            <div class="game-details">
+                <div class="detail-item">
+                    <span class="detail-label">Version:</span>
+                    <span class="detail-value" id="modalVersion">1.0.0</span>
                 </div>
-                <div class="download-buttons">
-                    <button class="download-btn download-4k" onclick="download4K()">
-                        <span>⬇ Download 4K</span>
-                    </button>
-                    <button class="download-btn download-hd" onclick="downloadHD()">
-                        <span>⬇ Download HD</span>
-                    </button>
+                <div class="detail-item">
+                    <span class="detail-label">Size:</span>
+                    <span class="detail-value" id="modalSize">100 MB</span>
                 </div>
             </div>
 
-            <!-- Mobile Downloads -->
+            <!-- APK Download -->
             <div class="download-section">
                 <div class="section-label">
                     <span>📱</span>
-                    <span>MOBILE</span>
+                    <span>DOWNLOAD</span>
                 </div>
-                <button class="download-btn download-mobile" onclick="downloadMobile()">
-                    <span>⬇ Download HD</span>
+                <button class="download-btn download-apk" onclick="downloadAPK()">
+                    <span>⬇ Download APK</span>
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- Music Player -->
+    <div id="musicPlayer" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button id="musicToggle" style="
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-purple);
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+        ">
+            🔇
+        </button>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
     <script>
-        // Sample wallpaper data
-        // ĐỂ THÊM WALLPAPER MỚI: Copy một object và thay đổi thông tin
-        // ĐỂ XÓA WALLPAPER: Xóa toàn bộ object tương ứng
-        const wallpapers = [
+        // Sample game data
+        // ĐỂ THÊM GAME MỚI: Copy một object và thay đổi thông tin
+        // ĐỂ XÓA GAME: Xóa toàn bộ object tương ứng
+        const games = [
             {
                 id: 1,
-                title: "Cosmic Drive live wallpaper",
-                resolution: "4K & HD Available",
-                videoUrl: "https://files.catbox.moe/yji34f.mp4",
-                download4K: "https://drive.google.com/file/d/1s0fOn1hbc_WRfxnJEYl8hzMi8Jos91Hg/view?usp=drivesdk",          // PC/Laptop 4K
-                downloadHD: "https://drive.google.com/file/d/1Qvxp46cJrL4fNHvHkhOn61B6KDMZ5TYM/view?usp=drivesdk",          // PC/Laptop HD
-                downloadMobile: "https://drive.google.com/file/d/1l-KDPr-WHAXYslbYWvnMNugb2a1yoRlq/view?usp=drivesdk"   // Mobile HD
+                title: "Subway Surfers",
+                version: "3.24.0",
+                size: "150 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/subway-surfers.apk"
+            },
+            {
+                id: 2,
+                title: "Minecraft PE",
+                version: "1.20.50",
+                size: "650 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/minecraft.apk"
+            },
+            {
+                id: 3,
+                title: "GTA San Andreas",
+                version: "2.10",
+                size: "2.4 GB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/gta-sa.apk"
+            },
+            {
+                id: 4,
+                title: "PUBG Mobile",
+                version: "3.0.0",
+                size: "950 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/pubg.apk"
+            },
+            {
+                id: 5,
+                title: "Clash of Clans",
+                version: "15.352.22",
+                size: "280 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/coc.apk"
+            },
+            {
+                id: 6,
+                title: "Among Us",
+                version: "2023.11.28",
+                size: "95 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/among-us.apk"
+            },
+            {
+                id: 7,
+                title: "Roblox",
+                version: "2.602.524",
+                size: "180 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/roblox.apk"
+            },
+            {
+                id: 8,
+                title: "Free Fire MAX",
+                version: "2.100.1",
+                size: "1.2 GB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/ff-max.apk"
+            },
+            {
+                id: 9,
+                title: "Stumble Guys",
+                version: "0.66",
+                size: "220 MB",
+                imageUrl: "",
+                downloadAPK: "https://example.com/stumble-guys.apk"
             }
-
             
             /* 
-            ĐỂ THÊM WALLPAPER MỚI, COPY ĐOẠN NÀY:
+            ĐỂ THÊM GAME MỚI, COPY ĐOẠN NÀY:
             
             ,
             {
                 id: 10,
-                title: "Tên Wallpaper",
-                resolution: "4K & HD Available",
-                videoUrl: "link-video-preview.mp4",
-                download4K: "link-download-4k.mp4",          // PC/Laptop 4K
-                downloadHD: "link-download-hd.mp4",          // PC/Laptop HD
-                downloadMobile: "link-download-mobile.mp4"   // Mobile HD
+                title: "Tên Game",
+                version: "1.0.0",
+                size: "100 MB",
+                imageUrl: "link-anh-game.jpg",      // Tùy chọn (để "" nếu không có)
+                downloadAPK: "link-apk.apk"         // Bắt buộc
             }
             
-            LƯU Ý VỀ VIDEO:
-            - Video phải từ nguồn hỗ trợ CORS (cross-origin)
-            - Hoặc upload lên cùng server với website
-            - Định dạng: .mp4, .webm
-            - Nếu video từ Google Drive/Dropbox: cần link direct download
             */
         ];
 
-        let currentWallpaper = null;
+        let currentGame = null;
 
-        // Generate wallpaper cards
-        function generateWallpapers() {
-            const grid = document.getElementById('wallpaperGrid');
-            wallpapers.forEach(wallpaper => {
+        // Generate game cards
+        function generateGames() {
+            const grid = document.getElementById('gameGrid');
+            games.forEach(game => {
                 const card = document.createElement('div');
-                card.className = 'wallpaper-card';
-                card.onclick = () => openModal(wallpaper);
+                card.className = 'game-card';
                 
-                // Kiểm tra và gán giá trị mặc định nếu undefined
-                const title = wallpaper.title || 'Untitled';
-                const resolution = wallpaper.resolution || '4K & HD Available';
-                const videoUrl = wallpaper.videoUrl || '';
+                const title = game.title || 'Untitled Game';
+                const version = game.version || '1.0.0';
+                const size = game.size || 'Unknown';
+                const imageUrl = game.imageUrl || '';
                 
-                // Tạo HTML cho thumbnail
+                // Tất cả game đều có thể click xem chi tiết
+                card.onclick = () => openModal(game);
+                
                 let thumbnailContent = '';
-                if (videoUrl && videoUrl.trim() !== '') {
-                    thumbnailContent = `<video autoplay loop muted playsinline></video>`;
+                if (imageUrl && imageUrl.trim() !== '') {
+                    thumbnailContent = `<img src="${imageUrl}" alt="${title}">`;
                 }
                 
                 card.innerHTML = `
-                    <div class="wallpaper-thumbnail ${videoUrl ? 'has-video' : ''}">
+                    <div class="game-thumbnail ${imageUrl ? 'has-image' : ''}">
                         ${thumbnailContent}
                     </div>
-                    <div class="wallpaper-info">
-                        <div class="wallpaper-title">${title}</div>
-                        <div class="wallpaper-resolution">${resolution}</div>
+                    <div class="game-info">
+                        <div class="game-title">${title}</div>
+                        <div class="game-version">Version ${version}</div>
+                        <div class="game-size">📦 ${size}</div>
                     </div>
                 `;
-                
-                // Nếu có video, load nó
-                if (videoUrl && videoUrl.trim() !== '') {
-                    const videoEl = card.querySelector('video');
-                    if (videoEl) {
-                        videoEl.src = videoUrl;
-                        videoEl.load();
-                        
-                        // Xử lý lỗi nếu video không load được
-                        videoEl.onerror = function() {
-                            console.error('Thumbnail video failed:', videoUrl);
-                            card.querySelector('.wallpaper-thumbnail').classList.remove('has-video');
-                        };
-                    }
-                }
                 
                 grid.appendChild(card);
             });
         }
 
         // Open detail modal
-        function openModal(wallpaper) {
-            currentWallpaper = wallpaper;
-            const videoElement = document.getElementById('modalVideo');
-            const placeholderElement = document.getElementById('modalPlaceholder');
+        function openModal(game) {
+            currentGame = game;
             
-            // Kiểm tra và gán giá trị mặc định
-            const title = wallpaper.title || 'Untitled Wallpaper';
-            const videoUrl = wallpaper.videoUrl || '';
-            
-            // Reset video trước
-            videoElement.pause();
-            videoElement.src = '';
-            videoElement.load();
-            
-            // Nếu có link video, hiển thị video; nếu không thì hiển thị placeholder
-            if (videoUrl && videoUrl.trim() !== '') {
-                // Thử load video
-                videoElement.src = videoUrl;
-                videoElement.style.display = 'none'; // Ẩn lúc đầu
-                placeholderElement.style.display = 'block';
-                placeholderElement.textContent = 'LOADING...';
-                
-                // Khi video sẵn sàng
-                videoElement.onloadeddata = function() {
-                    videoElement.style.display = 'block';
-                    placeholderElement.style.display = 'none';
-                    videoElement.play().catch(err => {
-                        console.log('Auto-play blocked, waiting for user interaction');
-                        // Nếu autoplay bị chặn, vẫn hiện video
-                    });
-                };
-                
-                // Xử lý lỗi nếu video không load được
-                videoElement.onerror = function(e) {
-                    console.error('Video failed to load:', videoUrl);
-                    console.error('Error details:', e);
-                    videoElement.style.display = 'none';
-                    placeholderElement.style.display = 'block';
-                    placeholderElement.textContent = 'VIDEO UNAVAILABLE';
-                    
-                    // Gợi ý debug
-                    console.log('💡 Tip: Check if the video URL is a direct link');
-                    console.log('💡 For Catbox: Use https://files.catbox.moe/xxxxx.mp4');
-                };
-                
-                // Timeout nếu load quá lâu (15 giây)
-                setTimeout(function() {
-                    if (videoElement.style.display === 'none' && placeholderElement.textContent === 'LOADING...') {
-                        placeholderElement.textContent = 'LOAD TIMEOUT';
-                        console.error('Video load timeout after 15s');
-                    }
-                }, 15000);
-                
-                // Load video
-                videoElement.load();
-            } else {
-                videoElement.style.display = 'none';
-                placeholderElement.style.display = 'block';
-                placeholderElement.textContent = 'NO PREVIEW';
-            }
+            const title = game.title || 'Untitled Game';
+            const version = game.version || '1.0.0';
+            const size = game.size || 'Unknown';
+            const imageUrl = game.imageUrl || '';
             
             document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalVersion').textContent = version;
+            document.getElementById('modalSize').textContent = size;
+            
+            const modalImage = document.getElementById('modalImage');
+            if (imageUrl && imageUrl.trim() !== '') {
+                modalImage.src = imageUrl;
+                modalImage.style.display = 'block';
+            } else {
+                modalImage.style.display = 'none';
+            }
+            
             document.getElementById('detailModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         // Close modal
         function closeModal() {
-            const videoElement = document.getElementById('modalVideo');
-            videoElement.pause();
-            videoElement.src = '';
             document.getElementById('detailModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // Download 4K
-        function download4K() {
-            if (currentWallpaper && currentWallpaper.download4K) {
-                // Tải file thật
-                window.location.href = currentWallpaper.download4K;
+        // Download APK
+        function downloadAPK() {
+            if (currentGame && currentGame.downloadAPK) {
+                window.location.href = currentGame.downloadAPK;
             } else {
-                const title = currentWallpaper ? currentWallpaper.title : 'this wallpaper';
-                alert(`Downloading ${title} in 4K (3840×2160)...\n\nPlease add download4K link to the wallpaper data.`);
+                const title = currentGame ? currentGame.title : 'this game';
+                alert(`Downloading ${title} APK...\n\nPlease add downloadAPK link to the game data.`);
             }
         }
 
-        // Download HD
-        function downloadHD() {
-            if (currentWallpaper && currentWallpaper.downloadHD) {
-                // Tải file thật
-                window.location.href = currentWallpaper.downloadHD;
-            } else {
-                const title = currentWallpaper ? currentWallpaper.title : 'this wallpaper';
-                alert(`Downloading ${title} in HD (1920×1080)...\n\nPlease add downloadHD link to the wallpaper data.`);
-            }
-        }
+        // Music Player
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
 
-        // Download Mobile
-        function downloadMobile() {
-            if (currentWallpaper && currentWallpaper.downloadMobile) {
-                // Tải file thật
-                window.location.href = currentWallpaper.downloadMobile;
+        // Thay link nhạc của bạn ở đây
+        bgMusic.src = 'https://files.catbox.moe/fijaa5.mp3'; // ← Thêm link nhạc MP3 vào đây
+
+        musicToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🔇';
+                isPlaying = false;
             } else {
-                const title = currentWallpaper ? currentWallpaper.title : 'this wallpaper';
-                alert(`Downloading ${title} for Mobile...\n\nPlease add downloadMobile link to the wallpaper data.`);
+                bgMusic.play().catch(err => {
+                    console.log('Auto-play blocked:', err);
+                    alert('Please click again to play music');
+                });
+                musicToggle.textContent = '🔊';
+                isPlaying = true;
             }
-        }
+        });
+
+        // Auto-play music khi load trang (có thể bị chặn bởi browser)
+        window.addEventListener('load', function() {
+            if (bgMusic.src && bgMusic.src !== '') {
+                bgMusic.play().catch(err => {
+                    console.log('Auto-play blocked, user needs to click music button');
+                });
+            }
+        });
 
         // Close modal when clicking outside
         document.getElementById('detailModal').addEventListener('click', function(e) {
@@ -771,7 +828,7 @@
         });
 
         // Initialize
-        generateWallpapers();
+        generateGames();
 
         // ===== COPY PROTECTION =====
         // Disable right-click
