@@ -602,10 +602,10 @@
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
             transition: all 0.3s ease;
         ">
-            🔇
+            🔊
         </button>
     </div>
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop autoplay>
         <source src="" type="audio/mpeg">
     </audio>
 
@@ -784,11 +784,12 @@
         // Music Player
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
-        let isPlaying = false;
+        let isPlaying = true; // Bắt đầu với trạng thái đang phát
 
         // Thay link nhạc của bạn ở đây
         bgMusic.src = 'https://files.catbox.moe/fijaa5.mp3'; // ← Thêm link nhạc MP3 vào đây
 
+        // Toggle music
         musicToggle.addEventListener('click', function() {
             if (isPlaying) {
                 bgMusic.pause();
@@ -796,20 +797,43 @@
                 isPlaying = false;
             } else {
                 bgMusic.play().catch(err => {
-                    console.log('Auto-play blocked:', err);
-                    alert('Please click again to play music');
+                    console.log('Play error:', err);
                 });
                 musicToggle.textContent = '🔊';
                 isPlaying = true;
             }
         });
 
-        // Auto-play music khi load trang (có thể bị chặn bởi browser)
+        // Auto-play music khi load trang
         window.addEventListener('load', function() {
             if (bgMusic.src && bgMusic.src !== '') {
-                bgMusic.play().catch(err => {
-                    console.log('Auto-play blocked, user needs to click music button');
-                });
+                // Thử phát nhạc tự động
+                const playPromise = bgMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise
+                        .then(() => {
+                            // Phát thành công
+                            musicToggle.textContent = '🔊';
+                            isPlaying = true;
+                            console.log('Music auto-playing');
+                        })
+                        .catch(err => {
+                            // Bị chặn auto-play, cần user interaction
+                            console.log('Auto-play blocked, waiting for user click');
+                            musicToggle.textContent = '🔇';
+                            isPlaying = false;
+                            
+                            // Thử phát khi user click bất kỳ đâu trên trang
+                            document.body.addEventListener('click', function playOnFirstClick() {
+                                bgMusic.play().then(() => {
+                                    musicToggle.textContent = '🔊';
+                                    isPlaying = true;
+                                    document.body.removeEventListener('click', playOnFirstClick);
+                                }).catch(e => console.log('Play failed:', e));
+                            }, { once: true });
+                        });
+                }
             }
         });
 
