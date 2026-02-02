@@ -565,14 +565,16 @@
         // ĐỂ XÓA WALLPAPER: Xóa toàn bộ object tương ứng
         const wallpapers = [
             {
-    id: 1,
-    title: "Cosmic Drive Live wallpaper",
-    videoUrl: "https://files.catbox.moe/yji34f.mp4", // ← CÓ LINK VIDEO
-    download4K: "https://drive.google.com/file/d/1s0fOn1hbc_WRfxnJEYl8hzMi8Jos91Hg/view?usp=drivesdk",
-    downloadHD: "https://drive.google.com/file/d/1Qvxp46cJrL4fNHvHkhOn61B6KDMZ5TYM/view?usp=drivesdk",
-    downloadMobile: "https://drive.google.com/file/d/1l-KDPr-WHAXYslbYWvnMNugb2a1yoRlq/view?usp=drivesdk"
-}
-   
+                id: 1,
+                title: "Cosmic Drive live wallpaper",
+                resolution: "4K & HD Available",
+                videoUrl: "https://files.catbox.moe/yji34f.mp4",
+                download4K: "https://drive.google.com/file/d/1s0fOn1hbc_WRfxnJEYl8hzMi8Jos91Hg/view?usp=drivesdk",          // PC/Laptop 4K
+                downloadHD: "https://drive.google.com/file/d/1Qvxp46cJrL4fNHvHkhOn61B6KDMZ5TYM/view?usp=drivesdk",          // PC/Laptop HD
+                downloadMobile: "https://drive.google.com/file/d/1l-KDPr-WHAXYslbYWvnMNugb2a1yoRlq/view?usp=drivesdk"   // Mobile HD
+            }
+
+            
             /* 
             ĐỂ THÊM WALLPAPER MỚI, COPY ĐOẠN NÀY:
             
@@ -605,32 +607,37 @@
                 card.className = 'wallpaper-card';
                 card.onclick = () => openModal(wallpaper);
                 
+                // Kiểm tra và gán giá trị mặc định nếu undefined
+                const title = wallpaper.title || 'Untitled';
+                const resolution = wallpaper.resolution || '4K & HD Available';
+                const videoUrl = wallpaper.videoUrl || '';
+                
                 // Tạo HTML cho thumbnail
                 let thumbnailContent = '';
-                if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+                if (videoUrl && videoUrl.trim() !== '') {
                     thumbnailContent = `<video autoplay loop muted playsinline></video>`;
                 }
                 
                 card.innerHTML = `
-                    <div class="wallpaper-thumbnail ${wallpaper.videoUrl ? 'has-video' : ''}">
+                    <div class="wallpaper-thumbnail ${videoUrl ? 'has-video' : ''}">
                         ${thumbnailContent}
                     </div>
                     <div class="wallpaper-info">
-                        <div class="wallpaper-title">${wallpaper.title}</div>
-                        <div class="wallpaper-resolution">${wallpaper.resolution}</div>
+                        <div class="wallpaper-title">${title}</div>
+                        <div class="wallpaper-resolution">${resolution}</div>
                     </div>
                 `;
                 
                 // Nếu có video, load nó
-                if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+                if (videoUrl && videoUrl.trim() !== '') {
                     const videoEl = card.querySelector('video');
                     if (videoEl) {
-                        videoEl.src = wallpaper.videoUrl;
+                        videoEl.src = videoUrl;
                         videoEl.load();
                         
                         // Xử lý lỗi nếu video không load được
                         videoEl.onerror = function() {
-                            console.error('Thumbnail video failed:', wallpaper.videoUrl);
+                            console.error('Thumbnail video failed:', videoUrl);
                             card.querySelector('.wallpaper-thumbnail').classList.remove('has-video');
                         };
                     }
@@ -646,15 +653,19 @@
             const videoElement = document.getElementById('modalVideo');
             const placeholderElement = document.getElementById('modalPlaceholder');
             
+            // Kiểm tra và gán giá trị mặc định
+            const title = wallpaper.title || 'Untitled Wallpaper';
+            const videoUrl = wallpaper.videoUrl || '';
+            
             // Reset video trước
             videoElement.pause();
             videoElement.src = '';
             videoElement.load();
             
             // Nếu có link video, hiển thị video; nếu không thì hiển thị placeholder
-            if (wallpaper.videoUrl && wallpaper.videoUrl.trim() !== '') {
+            if (videoUrl && videoUrl.trim() !== '') {
                 // Thử load video
-                videoElement.src = wallpaper.videoUrl;
+                videoElement.src = videoUrl;
                 videoElement.style.display = 'none'; // Ẩn lúc đầu
                 placeholderElement.style.display = 'block';
                 placeholderElement.textContent = 'LOADING...';
@@ -671,7 +682,7 @@
                 
                 // Xử lý lỗi nếu video không load được
                 videoElement.onerror = function(e) {
-                    console.error('Video failed to load:', wallpaper.videoUrl);
+                    console.error('Video failed to load:', videoUrl);
                     console.error('Error details:', e);
                     videoElement.style.display = 'none';
                     placeholderElement.style.display = 'block';
@@ -698,7 +709,7 @@
                 placeholderElement.textContent = 'NO PREVIEW';
             }
             
-            document.getElementById('modalTitle').textContent = wallpaper.title;
+            document.getElementById('modalTitle').textContent = title;
             document.getElementById('detailModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -718,7 +729,8 @@
                 // Tải file thật
                 window.location.href = currentWallpaper.download4K;
             } else {
-                alert(`Downloading ${currentWallpaper.title} in 4K (3840×2160)...\n\nPlease add download4K link to the wallpaper data.`);
+                const title = currentWallpaper ? currentWallpaper.title : 'this wallpaper';
+                alert(`Downloading ${title} in 4K (3840×2160)...\n\nPlease add download4K link to the wallpaper data.`);
             }
         }
 
@@ -728,7 +740,8 @@
                 // Tải file thật
                 window.location.href = currentWallpaper.downloadHD;
             } else {
-                alert(`Downloading ${currentWallpaper.title} in HD (1920×1080)...\n\nPlease add downloadHD link to the wallpaper data.`);
+                const title = currentWallpaper ? currentWallpaper.title : 'this wallpaper';
+                alert(`Downloading ${title} in HD (1920×1080)...\n\nPlease add downloadHD link to the wallpaper data.`);
             }
         }
 
@@ -738,7 +751,8 @@
                 // Tải file thật
                 window.location.href = currentWallpaper.downloadMobile;
             } else {
-                alert(`Downloading ${currentWallpaper.title} for Mobile...\n\nPlease add downloadMobile link to the wallpaper data.`);
+                const title = currentWallpaper ? currentWallpaper.title : 'this wallpaper';
+                alert(`Downloading ${title} for Mobile...\n\nPlease add downloadMobile link to the wallpaper data.`);
             }
         }
 
